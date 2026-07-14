@@ -1,15 +1,46 @@
+
 pipeline {
     agent any
+
+    environment {
+        REPO_URL = 'url'
+        PROJECT_DIR = 'demo'
+        APP_PORT = 'portnumber'
+    }
+
     stages {
-        stage('job1') {
+        stage('Checkout') {
             steps {
-                echo 'job1 run'
+                echo 'Pulling code from GitHub ${REPO_URL}'
             }
         }
-        stage('job2'){
-            steps{
-                echo 'job2 run'
+        stage('Build') {
+            steps {
+                echo 'Building application'
             }
         }
-     }
-}      
+        stage('Test') {
+            steps {
+                echo 'Running tests'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application'
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline completed successfully'
+        }
+        failure {
+            echo 'Pipeline failed'
+        }
+        always {
+            echo 'Pipeline Completed.'
+        }
+    }
+}
+
+     
